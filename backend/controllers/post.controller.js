@@ -23,7 +23,7 @@ export const addNewPost = async (req, res) => {
             .toBuffer();
 
         // buffer to data Uri
-        const fileUri = `data:image/jpeg; base64, ${optimizedImageBuffer.toString('base64')}`
+        const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`
         const cloudResponse = await cloudinary.uploader.upload(fileUri);
         const post = await Post.create({
             caption,
@@ -53,15 +53,16 @@ export const addNewPost = async (req, res) => {
 export const getAllPost = async (req, res) => {
     try {
         const posts = await Post.find().sort({ createdAt: -1 })
-            .populate({ path: 'author', select: 'username, profilePicture' })
+            .populate({ path: 'author', select: 'username profilePicture' })
             .populate({
                 path: 'comments',
                 sort: { createdAt: -1 },
                 populate: {
                     path: 'author',
-                    select: 'username, profilePicture'
+                    select: 'username profilePicture'
                 }
-            })
+            });
+            
         return res.status(200).json({
             posts,
             success: true
@@ -157,7 +158,8 @@ export const addComment = async (req, res) => {
     try {
         const postId = req.params.id;
         const commentKarneWaleUserKiId = req.id;
-
+        
+        
         const { text } = req.body;
         const post = await Post.findById(postId);
         if (!text) return res.status(400).json({ message: 'Text is required', success: false })
@@ -166,9 +168,11 @@ export const addComment = async (req, res) => {
             text,
             author: commentKarneWaleUserKiId,
             post: postId
-        }).populate({
+        })
+
+        await comment.populate({
             path: 'author',
-            select: 'username, profilePicture'
+            select: 'username profilePicture'
         })
 
         post.comments.push(comment._id);
@@ -190,7 +194,7 @@ export const getCommentsOfPost = async (req, res) => {
         const postId = req.params.id;
 
         const comments = await Comment.find({ post: postId })
-            .populate('author', 'username, profilePicture');
+            .populate('author', 'username profilePicture');
 
         if (!comments) return res.status(404).json({ message: "No message found for this post", success: true });
 
@@ -200,13 +204,14 @@ export const getCommentsOfPost = async (req, res) => {
     }
 }
 
-export const delatePost = async (req, res) => {
+export const deletePost = async (req, res) => {
     try {
         const postId = req.params.id;
         const authorId = req.id;
 
-        const post = await Post.findById(postId);
 
+        const post = await Post.findById(postId);
+        
         if (!post) return res.status(404).json({ message: 'Post not found', success: false })
 
         // check if the logged in user is the owner of the post
@@ -230,7 +235,7 @@ export const delatePost = async (req, res) => {
         await Comment.deleteMany({ post: postId });
 
         return res.status(200).json({
-            mesage: "Post deleted",
+            message: "Post deleted",
             success: true
         })
     } catch (error) {
