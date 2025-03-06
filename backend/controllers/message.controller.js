@@ -1,6 +1,6 @@
 import { Conversation } from "../models/conversation.model.js";
 import { Message } from "../models/message.model.js";
-import { getReceiverSocketId } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 // for chatting
 
@@ -9,8 +9,6 @@ export const sendMessage = async (req, res) => {
         const senderId = req.id;
         const receiverId = req.params.id;
         const {textMessage: message } = req.body;
-        console.log(message);
-        
 
         let conversation = await Conversation.findOne({
             participants: { $all: [senderId, receiverId] }
