@@ -77,9 +77,9 @@ export const login = async (req, res) => {
 
         // populate each post if it exists in post array
         const copulatedPosts = await Promise.all(
-            user.posts.map(async(postId)=>{
+            user.posts.map(async (postId) => {
                 const post = await Post.findById(postId);
-                if(post.author.equals(user._id)){
+                if (post.author.equals(user._id)) {
                     return post;
                 }
                 return null;
@@ -125,9 +125,9 @@ export const getProfile = async (req, res) => {
     try {
         const userId = req.params.id;
         let user = await User.findById(userId)
-        .populate({path: 'posts', createdAt: -1})
-        .populate('bookmarks')
-        .select("-password");
+            .populate({ path: 'posts', createdAt: -1 })
+            .populate('bookmarks')
+            .select("-password");
 
         return res.status(200).json({
             user,
@@ -228,7 +228,7 @@ export const followOrUnfollow = async (req, res) => {
             ])
             return res.status(200).json({
                 message: 'Unfollowed successfully',
-                success: false
+                success: true
             });
         } else {
             // follow logic
@@ -236,11 +236,14 @@ export const followOrUnfollow = async (req, res) => {
                 User.updateOne({ _id: followKarneWala }, { $push: { following: jiskoFollowKarunga } }),
                 User.updateOne({ _id: jiskoFollowKarunga }, { $push: { followers: followKarneWala } }),
             ])
+
             return res.status(200).json({
                 message: 'followed successfully',
-                success: false
+                success: true
             });
         }
+
+
     } catch (error) {
         console.log(error);
     }
