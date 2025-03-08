@@ -27,7 +27,7 @@ const Messages = ({ selectedUser }) => {
             </div>
             <div className='flex flex-col gap-3'>
                 {
-                  messages && messages.map((msg)=>{
+                  messages && messages?.map((msg)=>{
                         return (
                             <div className={`flex ${msg.senderId === user?._id ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`p-2 rounded-xl max-w-xs break-words ${msg.senderId === user?._id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}>

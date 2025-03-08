@@ -87,7 +87,7 @@ const LeftSidebar = () => {
                 <div className='flex flex-col'>
                     <img className='my-3 pl-3 font-bold text-xl w-20' src={logo} alt='LOGO'/>
                     <div>
-                        {sidebarItems.map((item, index) => (
+                        {sidebarItems?.map((item, index) => (
                             <div
                                 onClick={() => sidebarHandler(item.text)}
                                 className='flex items-center gap-3 relative hover:bg-gray-100 cursor-pointer rounded-lg p-3 my-3'
@@ -107,7 +107,7 @@ const LeftSidebar = () => {
                                                 <div >
                                                     {
                                                         likeNotification.length === 0 ? (<p>No new notification</p>) : (
-                                                            likeNotification.map((notification) => {
+                                                            likeNotification?.map((notification) => {
                                                                 return (
                                                                     <div key={notification.userId} className='flex items-center gap-2 my-2'>
                                                                         <Avatar>
@@ -133,7 +133,7 @@ const LeftSidebar = () => {
 
             {/* Sidebar for Mobile */}
             <div className='sm:hidden fixed bottom-0 z-10 left-0 w-full bg-white border-t border-gray-300 p-2 flex justify-around shadow-md'>
-                {sidebarItems.map((item, index) => (
+                {sidebarItems?.map((item, index) => (
                     <div
                         onClick={() => sidebarHandler(item.text)}
                         className='flex flex-col relative items-center cursor-pointer p-2'
@@ -153,7 +153,7 @@ const LeftSidebar = () => {
                                                 <div >
                                                     {
                                                         likeNotification.length === 0 ? (<p>No new notification</p>) : (
-                                                            likeNotification.map((notification) => {
+                                                            likeNotification?.map((notification) => {
                                                                 return (
                                                                     <div key={notification.userId} className='flex items-center gap-2 my-2'>
                                                                         <Avatar>

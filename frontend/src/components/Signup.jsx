@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import logo from '../assets/picVerse_logo.png'
 
 const Signup = () => {
 
@@ -16,7 +17,7 @@ const Signup = () => {
         password: ""
     })
     const [loading, setLoading] = useState(false);
-    const {user} = useSelector(store=> store.auth);
+    const { user } = useSelector(store => store.auth);
     const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
@@ -62,7 +63,7 @@ const Signup = () => {
         <div className='flex items-center w-screen h-screen justify-center'>
             <form onSubmit={signupHandler} className='shadow-lg flex flex-col gap-5 p-8'>
                 <div className='my-4'>
-                    <h1 className='text-center font-bold text-xl'>LOGO</h1>
+                    <img className='block mx-auto text-center font-bold text-xl w-10 py-2' src={logo} alt='LOGO' />
                     <p className='text-sm text-center'>Signup to see photos & videos from your friends</p>
                 </div>
                 <div>

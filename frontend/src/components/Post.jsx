@@ -50,7 +50,7 @@ const Post = ({ post }) => {
                 setLiked(!liked);
 
                 // updating the post        
-                const updatedPostData = posts.map(p =>
+                const updatedPostData = posts?.map(p =>
                     p._id === post._id ? {
                         ...p,
                         likes: liked ? p.likes.filter((id) => id !== user._id) : [...p.likes, user._id]
@@ -77,7 +77,7 @@ const Post = ({ post }) => {
                 const updatedCommentData = [...comment, res.data.comment];
                 setComment(updatedCommentData);
 
-                const updatedPostData = posts.map(p =>
+                const updatedPostData = posts?.map(p =>
                     p._id === post._id ? { ...p, comments: updatedCommentData } : p
                 );
 
@@ -133,7 +133,7 @@ const Post = ({ post }) => {
     return (
         <div className='my-4 w-full max-w-sm sm:max-w-lg mx-auto'>
             <div className='flex items-center justify-between'>
-                <div onClick={() => navigate(`/profile/${post?.author._id}`)} className='flex items-center gap-2'>
+                <div onClick={() => navigate(`/profile/${post?.author._id}`)} className='flex items-center gap-2 cursor-pointer'>
                     <Avatar>
                         <AvatarImage src={post?.author.profilePicture} alt="post_image" />
                         <AvatarFallback>CN</AvatarFallback>

@@ -44,7 +44,7 @@ const CommentDialog = ({ open, setOpen }) => {
                 const updatedCommentData = [...comment, res.data.comment];
                 setComment(updatedCommentData);
 
-                const updatedPostData = posts.map(p =>
+                const updatedPostData = posts?.map(p =>
                     p._id === selectedPost._id ? { ...p, comments: updatedCommentData } : p
                 );
 
@@ -100,7 +100,7 @@ const CommentDialog = ({ open, setOpen }) => {
                         <hr />
                         <div className='flex-1 overflow-y-auto max-h-96 p-4'>
                             {
-                             comment &&  comment.map((comment) => <Comment key={comment._id} comment={comment} />)
+                             comment &&  comment?.map((comment) => <Comment key={comment._id} comment={comment} />)
                             }
                         </div>
                         <div className='p-4'>
